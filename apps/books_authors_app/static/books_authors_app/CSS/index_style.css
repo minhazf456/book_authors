@@ -1,0 +1,20 @@
+.left{
+
+    margin-top: 10px;
+    width: 400px;
+    margin-bottom: 50px;
+    display: inline-block;
+
+}
+.right{
+
+    width: 450px;
+    height: 250px;
+    border: 3px;
+    display: inline-block;
+    margin-left: 200px;
+    text-align: center;
+    background-blend-mode: color-burn;
+    
+    
+}

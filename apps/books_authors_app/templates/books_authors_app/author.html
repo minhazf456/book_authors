@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>author</title>
+
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'books_authors_app/css/author_style.css' %}"> 
+    
+
+    <link rel="stylesheet" href=tps://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="ht"anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <div class="left">
+            <h2>Add an Author</h2>
+            <form action="/add_author" method="post">
+                {% csrf_token %}
+                <div class="form-group row">
+                  <label for="name" class="col-sm-2 col-form-label">First_name</label>
+                  <div class="col-sm-3">
+                    <input type="text" class="form-control" id="text" name="fname" >
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="name" class="col-sm-2 col-form-label">last_name</label>
+                  <div class="col-sm-3">
+                    <input type="text" class="form-control" id="lastName" name="lname">
+                  </div>
+                </div>
+                <div class="form-group">
+                        <label for="comment">Notes</label>
+                        <textarea class="form-control" rows="3" id="comment" name="text"></textarea>
+                      <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
+        <div class="right"> 
+
+            <table class="table">
+                    <thead class="thead-dark">
+                      <tr>
+                        
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {% for author in authors %}
+                      <tr>
+                        
+                        <td>{{author.id}}</td>
+                        <td>{{author.first_name}}  {{author.last_name}}   </td>
+                        <td><a href="author_info/{{author.id}}"> View </a></td>
+                      </tr>
+                    {% endfor %}
+        </div>
+        
+    </div>
+    
+</body>
+</html>

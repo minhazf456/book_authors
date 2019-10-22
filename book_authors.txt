@@ -1,0 +1,130 @@
+####Create the Book class model
+from django.db import models
+    
+class Book(models.Model):
+    title = models.CharField(max_length = 255)
+    desc = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def __repr__(self):
+        return f"<Book object: {self.title} ({self.desc})>"
+    
+class Author(models.Model):
+    first_name = models.CharField(max_length = 255)
+    last_name = models.CharField(max_length = 255)
+    notes = models.TextField()
+    books = models.ManyToManyField(Book, related_name = "authors")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True) 
+    
+    def __repr__(self) :
+        return f"<Author object: {self.first_name} {self.last_name} {self.notes} {self.books}>"
+
+
+####Query: Create 5 books with the following names: C Sharp, Java, Python, PHP, Ruby
+
+Book.objects.create(name = "C sharp", desc= " Sharp")
+Book.objects.create(name ="java", desc="Java")
+Book.objects.create(name ="python", desc="python book")
+Book.objects.create(name ="PHP", desc="PHP book")
+Book.objects.create(name ="Ruby", desc="Ruby book")
+
+###Query: Create 5 different authors: Jane Austen, Emily Dickinson, Fyodor Dostoevksy, William Shakespeare, Lau Tzu
+
+Author.objects.create(first_name = "Jane", last_name = "austen")
+Author.objects.create(first_name = "Emily", last_name = "Dickensin")
+Author.objects.create(first_name = "Fyoder", last_name = "Dostoevsky")
+Author.objects.create(first_name = "Lao", last_name = "Tzu")
+
+###Add a new text field in the authors table called 'notes'.
+
+notes = models.TextField()
+### Query: Change the name of the C Sharp book to C#
+
+b=Book.objects.get(id=1)
+>>> b.title="c#"
+>>> b.save()
+
+###Query: Change the first name of the 4th author to Bill
+ a=Author.objects.get(id=4)
+ a.first_name="bill"
+ a.save()
+ 
+ Query: Assign the first author to the first 2 books
+ 
+a = Book.objects.get(id=1)
+b = Book.objects.get(id=2)
+c = Author.objects.get(id=1)
+a.authors.add(c)
+b.authors.add(c)
+a.save()
+b.save()
+
+Query: Assign the second author to the first 3 books
+
+a = Book.objects.get(id=1)
+b = Book.objects.get(id=2)
+c = Book.objects.get(id=3)
+d = Author.objects.get(id=2)
+a.authors.add(d)
+b.authors.add(d)
+c.authors.add(d)
+a.save()
+b.save()
+c.save()
+#   Assign the third author to the first 4 books
+a = Book.objects.get(id=1)
+b = Book.objects.get(id=2)
+c = Book.objects.get(id=3)
+d = Book.objects.get(id=4)
+e = Author.objects.get(id=3)
+a.authors.add(e)
+b.authors.add(e)
+c.authors.add(e)
+d.authors.add(e)
+a.save()
+b.save()
+c.save()
+d.save()
+
+#Assign the fourth author to the first 5 books (or in other words, all the books)
+a = Book.objects.get(id=1)
+b = Book.objects.get(id=2)
+c = Book.objects.get(id=3)
+d = Book.objects.get(id=4)
+e = Book.objects.get(id=5)
+f = Author.objects.get(id=4)
+a.authors.add(f)
+b.authors.add(f)
+c.authors.add(f)
+d.authors.add(f)
+e.authors.add(f)
+a.save()
+b.save()
+c.save()
+d.save()
+e.save()
+
+#   For the 3rd book, retrieve all the authors
+Book.objects.get(id=3).authors.all()
+
+#   For the 3rd book, remove the first author
+Book.objects.get(id=3).authors.first().delete()
+
+#   For the 2nd book, add the 5th author as one of the authors
+a = Book.objects.get(id=2)
+b = Author.objects.get(id=5)
+a.authors.add(b)
+a.save()
+
+#   Find all the books that the 3rd author is part of
+Book.objects.filter(authors=Author.objects.get(id=3))
+
+#   Find all the books that the 2nd author is part of
+Book.objects.filter(authors=Author.objects.get(id=2))
+--> raise error (No match)
+
+
+ 
+ 
